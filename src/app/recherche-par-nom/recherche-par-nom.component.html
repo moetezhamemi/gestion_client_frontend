@@ -1,0 +1,50 @@
+<div class="container">
+<form class="form-inline">
+  <div class="form-group mx-sm-3 mb-2 mt-2">
+    <label>Rechercher client</label>
+    <input #searchInput
+           [(ngModel)]="searchTerm"
+           name="searchTerm"
+           class="form-control"
+           placeholder="Tapez un nom" >
+  </div>
+</form>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-striped">
+        <tr>
+          <th>Id</th>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Date Inscription</th>
+          <th>Type</th>
+        </tr>
+        
+@for (client of clients | searchFilter :searchTerm; track client.idclient){
+          <tbody>
+            <tr>
+              <td>{{client.idclient}}</td>
+              <td>{{client.nomclient}}</td>
+              <td>{{client.emailclient}}</td>
+              <td>{{client.dateinscription | date:'dd/MM/yyyy'}}</td>
+              @if(client.type) {
+                <td>{{client.type.nomType}}</td>
+              } @else {
+                <td>PAS DE TYPE</td>
+              }
+              <!--
+              <td>
+                <a class="btn btn-danger" (click)="supprimerClient(client)">Supprimer</a>
+              </td>
+              <td>
+                <a class="btn btn-success" [routerLink]="['/updateClient',client.idclient]">Modifier</a>
+              </td>
+              -->
+            </tr>
+          </tbody>
+        }
+      </table>
+    </div>
+  </div>
+</div>

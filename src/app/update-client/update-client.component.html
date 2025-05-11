@@ -1,0 +1,49 @@
+<div class="container">
+    <div>
+      <h2>Modifier un Client :</h2>             
+    </div>
+    <form>         
+        <div class="col-sm-2 col-md-2 col-lg-2">
+          <label>ID Client</label>
+          <input readonly type="text" [(ngModel)]="currentClient.idclient"  
+                 name="idclient" class="form-control">
+        </div>
+    
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <label>Nom Client</label>
+          <input type="text" [(ngModel)]="currentClient.nomclient"  
+                 name="nomclient" class="form-control">
+        </div>
+
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="currentClient.emailclient"  
+                 name="emailclient" class="form-control">
+        </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+          <label> Adresse:</label>
+          <input type="adresse" [(ngModel)]="currentClient.adresseclient"  
+                 name="adresseclient" class="form-control">
+        </div>
+
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <label>Date Inscription</label>
+          <input type="date" [ngModel]="currentClient.dateinscription | date: 'yyyy-MM-dd'" 
+                 (ngModelChange)="currentClient.dateinscription = $event" name="dateinscription" 
+                 class="form-control">
+        </div>
+
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <label>Type</label>
+          <select class="form-control form-control-lg" id="idType" name="idType" [(ngModel)]="updatedTypeId">
+            @for(type of types; track type.idType) {
+              <option [value]="type.idType">{{type.nomType}}</option>
+            }
+          </select>                 
+        </div>
+    
+        <div class="mt-2">
+          <button type="submit" (click)="updateClient()" class="btn btn-success">Modifier</button>
+        </div>  
+    </form>
+</div>

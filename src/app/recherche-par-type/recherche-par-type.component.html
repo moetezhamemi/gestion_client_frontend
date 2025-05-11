@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="container">
+    <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+        <h2>recherche par type</h2>
+      <select class="form-control form-control-lg" id="idType" name="idType" 
+              [(ngModel)]="idType" (change)="onChange()">
+        @for(type of types; track type.idType) {
+          <option value="{{type.idType}}">{{type.nomType}}</option>
+        }
+      </select>
+    </div>
+
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <table class="table table-striped">
+          <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Email</th>
+
+                        <th>adresse</th>
+
+            <th>Date Inscription</th>
+            <th>Type</th>
+          </tr>
+          
+          @for (client of clients; track client.idclient) {
+            <tbody>
+              <tr>
+                <td>{{client.idclient}}</td>
+                <td>{{client.nomclient}}</td>
+                <td>{{client.emailclient}}</td>
+                <td>{{client.adresseclient}}</td>
+                <td>{{client.dateinscription | date:'dd/MM/yyyy'}}</td>
+
+                @if(client.type) {
+                  <td>{{client.type.nomType}}</td>
+                } @else {
+                  <td>PAS DE TYPE</td>
+                }
+              </tr>
+            </tbody>
+          }
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
