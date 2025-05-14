@@ -11,24 +11,25 @@ export class AuthService {
   public loggedUser!: string;
   public isloggedIn: Boolean = false;
   public roles!: string[];
+  public regitredUser: User = new User();
   apiURL: string = 'http://localhost:9082/users';
-  token!:string;
+  token!: string;
   private helper = new JwtHelperService();
   /*users: User[] = [{ "username": "admin", "password": "123", "roles": ['ADMIN'] },
   { "username": "nadhem", "password": "123", "roles": ['USER'] }];*/
 
 
 
-  constructor(private router: Router,private http : HttpClient) { }
-logout() { 
-  this.loggedUser = undefined!;
-  this.roles = undefined!;
-  this.token= undefined!;
-  this.isloggedIn = false;
-  localStorage.removeItem('jwt');
-  this.router.navigate(['/login']);
+  constructor(private router: Router, private http: HttpClient) { }
+  logout() {
+    this.loggedUser = undefined!;
+    this.roles = undefined!;
+    this.token = undefined!;
+    this.isloggedIn = false;
+    localStorage.removeItem('jwt');
+    this.router.navigate(['/login']);
 
-}
+  }
   /*SignIn(user: User): Boolean {
     let validUser: Boolean = false;
     this.users.forEach((curUser) => {
@@ -43,12 +44,11 @@ logout() {
     });
     return validUser;
   }*/
-  login(user : User)
-{
-  this.isloggedIn = true;
-return this.http.post<User>(this.apiURL+'/login', user , {observe:'response'});
+  login(user: User) {
+    this.isloggedIn = true;
+    return this.http.post<User>(this.apiURL + '/login', user, { observe: 'response' });
 
-}
+  }
 
 
   isAdmin(): Boolean {
@@ -69,28 +69,43 @@ return this.http.post<User>(this.apiURL+'/login', user , {observe:'response'});
     });
   }*/
 
- getToken():string {
- return this.token;
- }
- decodeJWT()
-{   if (this.token == undefined)
-          return;
-  const decodedToken = this.helper.decodeToken(this.token);
-  this.roles = decodedToken.roles;
-  this.loggedUser = decodedToken.sub;
-}
-  saveToken(jwt:string){
-    localStorage.setItem('jwt',jwt);
-    this.token = jwt;
-    this.isloggedIn = true; 
-    this.decodeJWT(); 
-}
-loadToken() {
-  this.token = localStorage.getItem('jwt')!;
-  this.decodeJWT();
-}
-  isTokenExpired(): Boolean
-  {
-    return  this.helper.isTokenExpired(this.token);   
+  getToken(): string {
+    return this.token;
   }
+  decodeJWT() {
+    if (this.token == undefined)
+      return;
+    const decodedToken = this.helper.decodeToken(this.token);
+    this.roles = decodedToken.roles;
+    this.loggedUser = decodedToken.sub;
+  }
+  saveToken(jwt: string) {
+    localStorage.setItem('jwt', jwt);
+    this.token = jwt;
+    this.isloggedIn = true;
+    this.decodeJWT();
+  }
+  loadToken() {
+    this.token = localStorage.getItem('jwt')!;
+    this.decodeJWT();
+  }
+  isTokenExpired(): Boolean {
+    return this.helper.isTokenExpired(this.token);
+  }
+  registerUser(user: User) {
+    return this.http.post<User>(this.apiURL + '/register', user,
+      { observe: 'response' });
+  }
+  setRegistredUser(user: User) {
+    this.regitredUser = user;
+  }
+  getRegistredUser() {
+    return this.regitredUser;
+  }
+  validateEmail(code : string){
+return this.http.get<User>(this.apiURL+'/verifyEmail/'+code);
+}
+
+
+
 }

@@ -24,7 +24,7 @@
             <li> <a class="dropdown-item" routerLink="/rechercheParType" >Recherche Par Type</a></li>
             <li> <a class="dropdown-item" routerLink="/rechercheParNom" >Recherche Par Nom</a></li>
              @if(authService.isAdmin()) {
-            <li><a class="dropdown-item" routerLink="/listeTypes" >Gestion des catégories</a></li>}
+            <li><a class="dropdown-item" routerLink="/listeTypes" >Gestion des types</a></li>}
 
           </ul>
         </li>
@@ -35,14 +35,11 @@
             [{{authService.loggedUser}}]
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            @if(!(authService.isloggedIn)){
+            @if((!authService.isloggedIn)){
               <li><a class="dropdown-item"routerLink="/login">Login</a></li>
             }
             @else {
               <li><a class="dropdown-item"   (click) = "onLogout()">Logout</a></li>
-            
-       
-        
             <li><a class="dropdown-item" href="#">Profile</a></li>}
           </ul>
         </li>
